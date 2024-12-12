@@ -2,7 +2,6 @@
   "name": "react-session-auth-quickstart",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev:frontend": "vite",
     "dev:backend": "tsx watch server/index.ts",
@@ -12,7 +11,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "server:build": "tsc -p server/tsconfig.json",
-    "start": "node server/dist/index.js"
+    "start": "NODE_ENV=production node dist/index.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
