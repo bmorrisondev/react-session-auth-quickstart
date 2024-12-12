@@ -52,7 +52,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     const data = await response.json()
-    setUser(data.user)
+    setUser(data)
   }
 
   // Used to sign up a new user, create a session, and store the user data in the context
@@ -72,7 +72,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     const data = await response.json()
-    setUser(data.user)
+    setUser(data)
   }
 
   // Used to sign out a user and clear the user data from the context

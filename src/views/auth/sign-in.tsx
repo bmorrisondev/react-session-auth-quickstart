@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -23,7 +23,14 @@ export default function SignIn() {
   }>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const navigate = useNavigate()
-  const { signIn } = useAuth()
+  const { user, signIn } = useAuth()
+
+  useEffect(() => {
+    console.log('[sign-in] user:', user)
+    if (user) {
+      navigate('/app')
+    }
+  }, [navigate, user])
 
   const handleSubmit = async (data: typeof formData) => {
     try {
@@ -35,7 +42,7 @@ export default function SignIn() {
       
       // Attempt sign in
       await signIn(validatedData.email, validatedData.password)
-      navigate('/app')
+      console.log('[sign-in] signed in!')
     } catch (error) {
       if (error instanceof ZodError) {
         const formattedErrors: Record<string, string> = {}
