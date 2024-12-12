@@ -1,5 +1,4 @@
 {
   "buildCommand": "npm run build:all",
-  "devCommand": "npm start",
-  "production": true
+  "devCommand": "npm start"
 }
