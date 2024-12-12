@@ -13,6 +13,19 @@ A modern full-stack template demonstrating session-based authentication using Re
 - 🎨 Pre-styled with Tailwind CSS and shadcn/ui
 - 🛠️ Development ready with hot reload
 
+## Looking for a Full-Featured Auth Solution?
+
+Check out [Clerk](https://clerk.com) - the comprehensive authentication and user management platform:
+
+- 🎨 Beautiful drop-in UI components for authentication
+- 🔑 Social sign-on with multiple providers (Google, GitHub, etc.)
+- 🏢 Enterprise-ready B2B configurations
+- 📊 Simple user management dashboard
+- 📱 Multi-factor authentication
+- 🔒 Built-in security best practices
+
+While this template demonstrates session-based auth fundamentals, Clerk provides a production-ready solution that scales with your application.
+
 ## Prerequisites
 
 - Node.js 18+
