@@ -242,11 +242,9 @@ router.get('/me', requireAuth, async (req, res) => {
     }
 
     res.json({
-      user: {
-        id: session.user.id,
-        email: session.user.email,
-        name: session.user.name
-      }
+      id: session.user.id,
+      email: session.user.email,
+      name: session.user.name
     })
   } catch (error) {
     console.error('Get current user error:', error)

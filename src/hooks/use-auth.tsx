@@ -26,7 +26,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         credentials: 'include'
       })
       const data = await response.json()
-      setUser(data.user)
+      setUser(data)
     } catch (error) {
       console.error('Failed to check auth status:', error)
       setUser(null)
