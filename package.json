@@ -8,6 +8,7 @@
     "dev:backend": "tsx watch server/index.ts",
     "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
     "build": "tsc -b && vite build",
+    "build:all": "chmod +x build.sh && ./build.sh",
     "lint": "eslint .",
     "preview": "vite preview",
     "server:build": "tsc -p server/tsconfig.json",

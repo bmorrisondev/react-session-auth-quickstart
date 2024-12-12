@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { Router, Request, Response } from 'express'
 import { prisma } from '../db/prisma'
 import bcrypt from 'bcryptjs'
 import { randomBytes } from 'crypto'
@@ -19,25 +19,38 @@ const signUpSchema = z.object({
   name: z.string().optional()
 })
 
+router.post('/asdf', async (req: Request, res: Response) => {
+  try {
+    res.status(200).json({ 
+      message: 'Success'
+    })
+  } catch (err) {
+    console.error('Sign up error:', err)
+    res.status(500).json({ error: 'Internal server error' })
+  }
+})
+
 // Sign up
-router.post('/signup', async (req, res) => {
+router.post('/signup', async (req: Request, res: Response) => {
   try {
     const result = signUpSchema.safeParse(req.body)
     if (!result.success) {
-      return res.status(400).json({ 
+      res.status(400).json({ 
         error: 'Validation failed', 
         details: result.error.errors.map(err => ({
           path: err.path.join('.'),
           message: err.message
         }))
       })
+      return
     }
 
     const { email, password, name } = result.data
 
     // Validate input
     if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' })
+      res.status(400).json({ error: 'Email and password are required' })
+      return
     }
 
     // Check if user exists
@@ -46,7 +59,7 @@ router.post('/signup', async (req, res) => {
     })
 
     if (existingUser) {
-      return res.status(400).json({ error: 'Email already registered' })
+      res.status(400).json({ error: 'Email already registered' })
     }
 
     // Hash password
@@ -91,43 +104,45 @@ router.post('/signup', async (req, res) => {
   } catch (err) {
     console.error('Sign up error:', err)
     if (err instanceof ZodError) {
-      return res.status(400).json({ 
+      res.status(400).json({ 
         error: 'Validation failed',
         details: err.errors.map(err => ({
           path: err.path.join('.'),
           message: err.message
         }))
       })
+      return
     }
     res.status(500).json({ error: 'Internal server error' })
   }
 })
 
-
-
 const signInSchema = z.object({
   email: z.string().email('Invalid email address'),
   password: z.string().min(1, 'Password is required')
 })
+
 // Sign in
-router.post('/signin', async (req, res) => {
+router.post('/signin', async (req: Request, res: Response) => {
   try {
     const result = signInSchema.safeParse(req.body)
     if (!result.success) {
-      return res.status(400).json({ 
+      res.status(400).json({ 
         error: 'Validation failed', 
         details: result.error.errors.map(err => ({
           path: err.path.join('.'),
           message: err.message
         }))
       })
+      return 
     }
 
     const { email, password } = result.data
 
     // Validate input
     if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' })
+      res.status(400).json({ error: 'Email and password are required' })
+      return
     }
 
     // Find user
@@ -136,13 +151,15 @@ router.post('/signin', async (req, res) => {
     })
 
     if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' })
+      res.status(401).json({ error: 'Invalid credentials' })
+      return
     }
 
     // Verify password
     const isValid = await bcrypt.compare(password, user.passwordHash)
     if (!isValid) {
-      return res.status(401).json({ error: 'Invalid credentials' })
+      res.status(401).json({ error: 'Invalid credentials' })
+      return
     }
 
     // Create session
@@ -174,13 +191,14 @@ router.post('/signin', async (req, res) => {
   } catch (err) {
     console.error('Sign in error:', err)
     if (err instanceof ZodError) {
-      return res.status(400).json({ 
+      res.status(400).json({ 
         error: 'Validation failed',
         details: err.errors.map(err => ({
           path: err.path.join('.'),
           message: err.message
         }))
       })
+      return
     }
     res.status(500).json({ error: 'Internal server error' })
   }
@@ -208,7 +226,8 @@ router.get('/me', requireAuth, async (req, res) => {
   try {
     const token = req.cookies.session
     if (!token) {
-      return res.json({ user: null })
+      res.json({ user: null })
+      return
     }
 
     const session = await prisma.session.findUnique({
@@ -218,7 +237,8 @@ router.get('/me', requireAuth, async (req, res) => {
 
     if (!session || session.expiresAt < new Date()) {
       res.clearCookie('session')
-      return res.json({ user: null })
+      res.json({ user: null })
+      return
     }
 
     res.json({

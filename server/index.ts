@@ -7,7 +7,7 @@ dotenv.config();
 
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import authRoutes from './routes/auth';
-import { requireAuth } from './middleware/auth';
+// import { requireAuth } from './middleware/auth';
 
 console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 
@@ -50,17 +50,19 @@ if (process.env.NODE_ENV !== 'production') {
       changeOrigin: true,
       ws: true,
       // Don't proxy /api requests
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       filter: (pathname: string) => !pathname.startsWith('/api'),
     })
   );
 } else {
   // Production: Serve static files
-  app.use(express.static(path.join(__dirname, '../dist')));
+  app.use(express.static(path.join(__dirname, './public')));
   
   // Handle React routing in production
   app.get('*', (req, res) => {
     if (!req.path.startsWith('/api')) {
-      res.sendFile(path.join(__dirname, '../dist/index.html'));
+      res.sendFile(path.join(__dirname, './public/index.html'));
     }
   });
 }
