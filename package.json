@@ -13,9 +13,9 @@
     "server:build": "tsc -p server/tsconfig.json",
     "start": "NODE_ENV=production node dist/index.js"
   },
-  "pre-commit": {
+  "pre-commit": [
     "build:all"
-  },
+  ],
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-accordion": "^1.2.1",
@@ -94,7 +94,9 @@
     "http-proxy-middleware": "^3.0.3",
     "pg": "^8.13.1",
     "postcss": "^8.4.49",
+    "pre-commit": "^1.2.2",
     "prisma": "^6.0.1",
+    "rimraf": "^6.0.1",
     "tailwindcss": "^3.4.16",
     "tsx": "^4.19.2",
     "typescript": "~5.6.2",
