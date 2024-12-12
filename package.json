@@ -13,6 +13,9 @@
     "server:build": "tsc -p server/tsconfig.json",
     "start": "NODE_ENV=production node dist/index.js"
   },
+  "pre-commit": {
+    "build:all"
+  },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-accordion": "^1.2.1",

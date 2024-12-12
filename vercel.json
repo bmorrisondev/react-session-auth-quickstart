@@ -1,7 +1,12 @@
 {
-  "buildCommand": "npm run build:all",
-  "devCommand": "npm start",
   "version": 2,
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node",
+      "config": { "includeFiles": ["dist/**"] }
+    }
+  ],
   "routes": [
     {
       "src": "/(.*)",
