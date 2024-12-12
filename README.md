@@ -88,6 +88,39 @@ The app will be available at `http://localhost:5173`
 4. Frontend can check auth status via the `/api/auth/me` endpoint
 5. Protected routes/resources check for valid session
 
+## Building for Production
+
+1. Build the project:
+```bash
+npm run build:all
+```
+
+This command will:
+- Build the React frontend
+- Compile the TypeScript backend
+- Move all assets to the correct locations (/dist)
+
+2. Start the production server:
+```bash
+npm start
+```
+
+The production build will be available at the port specified in your environment variables (default: 3000).
+
+### Deployment Options
+
+You can deploy this application to any platform that supports Node.js applications. General steps:
+
+1. Build the project using `npm run build:all`
+2. Set up your environment variables
+3. Run `npm start` to start the production server
+
+Remember to:
+- Use HTTPS in production
+- Set up proper security headers
+- Configure your database connection string
+- Set `NODE_ENV` to "production"
+
 ## Contributing
 
 Feel free to submit issues and pull requests!
